@@ -191,7 +191,6 @@ $tipo = procuraProduto('tipo',$conn);
                     </label>
                 <label for="estado-prod" style="transform: translateX(3rem);">Estado:<select id="estado-prod" name="estado-prod" required>
                         <option value="lacrado">Lacrado</option>
-                        <option value="aberto">Aberto</option>
                         <option value="Vazio">Vazio</option>
                     </select>
                 </label>
@@ -199,10 +198,9 @@ $tipo = procuraProduto('tipo',$conn);
             </div>
             <div class="pausa"></div>
             <div class="" id="container-input">
-                <label for="quantidade-prod">quantidade mínima:<input type="number" id="quantidade-prod" name="quantidade-prod-min" style="width: 23%;" min="0" required></label>
-                <label for="quantidade-prod">quantidade atual:<input type="number" id="quantidade-prod" name="quantidade-prod-atu" style="width: 23%;" min="0" required></label>
-                <label for="quantidade-prod">quantidade ideal:<input type="number" id="quantidade-prod" name="quantidade-prod-max" style="width: 23%;" min="0"></label>
-                <input type="hidden" name="id" value="<?php echo $idProduto ?>">
+                <label for="quantidade-prod">Quantidade mínima:<input type="number" id="quantidade-prod" name="quantidade-prod-min" style="width: 23%;" min="0" required></label>
+                <label for="quantidade-prod">Quantidade atual:<input type="number" id="quantidade-prod" name="quantidade-prod-atu" style="width: 23%;" min="0" required></label>
+                <label for="quantidade-prod">Quantidade ideal:<input type="number" id="quantidade-prod" name="quantidade-prod-max" style="width: 23%;" min="0"></label>
             </div>
             <div class="pausa"></div>
             <div class="container-input">

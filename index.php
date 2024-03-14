@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
 //Mantêm o login ativo.
-if(isset($_SESSION["manterLogin"])){
+if(isset($_SESSION["manterLogin"]) AND isset($_SESSION["id_usuario"])){
     header("Location: home.php");
     exit();
 }

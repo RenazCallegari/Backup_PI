@@ -190,10 +190,25 @@ VerificaUser();
                         <p> usos.</P>
                         </p>
                     </div>
-                    <div class="container-util">
-                        <p id="dados-inicio">
-                        <!-- adicionar aqui a parte do php ;) -->
-                        </p>
+                    <div class="container-util-usuario">
+                        <p>Bem-vindo(a)</p>
+                        <h2>
+                        <?php
+                            $sql = "SELECT usuario FROM usuario WHERE id_usuario ='{$_SESSION['id_usuario']}'";
+                            $resul = $conn->query($sql);
+
+                            $nome = array();
+                            if ($resul->num_rows > 0) {
+                                while ($row = $resul->fetch_assoc()) {
+                                    $nome[] = $row;
+                                }
+                                foreach ($nome as $nome){
+                                    $nome = $nome['usuario'];
+                                }
+                                echo $nome;
+                            }
+                            ?>
+                        </h2>
                     </div>
                     <div class="container-util">
                     <p>O produto menos utilizado foi: </p>
@@ -215,12 +230,12 @@ VerificaUser();
 
         </div>
     <?php
-    
+
     //Se for acionado algum gatilho de alerta vinculado a sessão atual, o sistema irá apresentar um erro/alerta
     //desvinculará o erro/alerta do usuário.
     if (isset($_SESSION['texto_alerta'])){
         echo '<div class="erro-box-home" id="erro-box-home">' . $_SESSION['texto_alerta'] . '</div>';
-        echo '<a class="btn" id="fechar" onclick="fecharErro()">X</a>';
+        echo '<a class="btn" id="fechar" onclick="fecharErro()">Voltar</a>';
         unset($_SESSION['texto_alerta']);
     }
 

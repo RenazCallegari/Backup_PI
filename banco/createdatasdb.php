@@ -4,10 +4,10 @@ $host = "localhost";
 //Host ≠ LocalHost. Host e todo e qualquer dispositivo conectado a uma rede, um host nada mais e do que um provedor de servicos.
 //LocalHost e um conjunto de faixa de ip (127.0.0.0) cuja funcao e permitir que o computador possa conversar consigo mesmo, isso e disponibilizar servicos para si.
  
-$user = "id21965817_root";
+$user = "root";
 //Root vem de raiz, e o termo adotado pelas S.O linux para definir um administrador, neste contexto o user seria o usuario que tem acesso ao SGBD.
  
-$password = "@Senac2010";
+$password = "";
 //Uma senha vazia.
  
 $bd = "id21965817_db_estetcontrol";

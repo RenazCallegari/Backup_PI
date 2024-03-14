@@ -79,7 +79,7 @@ body {
     text-align: center;
     border: 3px solid #99f582;  
     border-radius: 1rem;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     z-index: 200;
@@ -755,20 +755,23 @@ ul li.item-menu a .icon > i {
 .container-footer {
     z-index: 6;
     position: fixed;
-    background-color: #000;
+    background-color: #00000030;
+    backdrop-filter: blur(1.5px);
     top: 96vh;
     left: 0;
     width: 100vw;
     height: 2.5rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-direction: row;
 }
 
 .container-footer a {
-    color: #fff;
+    color: #fffffff6;
     font-size: 20px;
     transition: .2s ease;
+    margin-left: 4rem;
 }
 
 /* .container-footer a:hover {
@@ -818,6 +821,7 @@ ul li.item-menu a .icon > i {
     width: 100%;
     padding: 8px 10px;
     border-radius: 1rem;
+    backdrop-filter: blur(5px);
 }
 
 .container-label-dados h3 {
@@ -859,12 +863,39 @@ ul li.item-menu a .icon > i {
 
 .container-util {
     background-color: #25d39f;
-    width: 18rem;
-    height: 17rem;
+    width: 20rem;
+    height: 16rem;
     border-radius: 2rem;
     border:solid 2px #74ffd5;   
     box-shadow: 0 0 15px #74ffd5;
     text-align: center;
+}
+
+.container-util-usuario {
+    background-color: #25d39f;
+    width: 25rem;
+    height: 15rem;
+    border-radius: 2rem;
+    border:solid 2px #74ffd5;   
+    box-shadow: 0 0 15px #74ffd5;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-flow: column;
+    text-align: center;
+}
+
+.container-util-usuario h2 {
+    padding: 6px 3px;
+    width: 90%;
+    background-color: #ffffff76;
+    backdrop-filter: blur(5px);
+    font-size: 27px;
+    font-weight: 500;
+    border: 1px solid #ffffffc1;
+    border-radius: 1.5rem;
 }
 
 .container-inner {
@@ -888,6 +919,8 @@ ul li.item-menu a .icon > i {
     justify-content: space-between;
     flex-direction: column;
     flex-wrap: wrap;
+    flex-flow: column;
+    margin-bottom: 10rem;
 }
 
 .estoque-label {
@@ -896,6 +929,7 @@ ul li.item-menu a .icon > i {
     width: 100%;
     padding: 8px 10px;
     border-radius: 1rem;
+    backdrop-filter: blur(5px);
 }
 
 .estoque-label p {
@@ -911,7 +945,14 @@ table {
     border-radius: 10px;
     position: absolute;
     top: 10rem;
-    margin-bottom: 2rem;
+}
+
+.container-fantasma {
+    width: 70vw;
+    height: 15rem;
+    margin-top: 5rem;
+    background-color: #25d39f;
+    position: relative;
 }
 
 
@@ -1053,6 +1094,7 @@ table, th, td {
     width: 100%;
     padding: 8px 10px;
     border-radius: 1rem;
+    backdrop-filter: blur(5px);
 }
 
 .label-cadastro p {
@@ -1177,6 +1219,7 @@ table, th, td {
     width: 100%;
     padding: 8px 10px;
     border-radius: 1rem;
+    backdrop-filter: blur(5px);
 }
 
 .label-cadastro-usuario p {

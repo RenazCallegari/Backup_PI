@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        body {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+
+    
+    <div class="container-modal" id="janela-modal">
+        <div class="janela-modal">
+            <p>Deseja Realmente sair?</p>
+            <div class="container-btn">
+                <button class="btn" id="fechar" onclick="fecharPopup()">Voltar</button>
+                <button class="btn" id="logoff">Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra de navegação lateral -->
+    <nav class="sidebar">
+       
+        <div class="btn-expandir">
+            <i class='bx bx-menu' id="btn-exp"></i>
+        </div>
+
+        <!-- lista de itens dentro da barra lateral -->
+        <ul>
+            <li class="item-menu">
+                <a href="home.html">
+                    <span class="icon"><i class='bx bx-home-alt' ></i></span>
+                    <span class="txt-link">Inicio</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="cadastro.html">
+                    <span class="icon"><i class='bx bx-log-in-circle'></i></span>
+                    <span class="txt-link">Cadastro</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="estoque.html">
+                    <span class="icon"><i class='bx bx-cube-alt'></i></span>
+                    <span class="txt-link">Estoque</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="#">
+                    <span class="icon"><i class='bx bx-calendar'></i></span>
+                    <span class="txt-link">Vencimentos</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="" target="_self">
+                    <span class="icon"><i class='bx bx-user-plus bx-flip-horizontal' ></i></span>
+                    <span class="txt-link">Cadastro de Usuario</span>
+                </a>
+            </li>
+        </ul>
+    
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container-header">
+            <div class="container-user-box">
+                <i class='bx bx-user-circle' id="btn-usuario" onclick="abrirPopup()"></i>
+            </div>
+        </div>
+        <div class="container-logoff" id="janela-popup">
+            <i class='bx bxs-up-arrow'></i>
+            <div class="container-box-logoff">
+                <a href="#" class="btn-sair" onclick="abrirModal()">Sair</a>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container-form-cadastro">
+        
+        <div class="label-cadastro">
+            <p>Alterar informações do produto:</p>
+        </div>
+
+        <form action="editar-produto.html" method="get">
+            <div class="container-input">
+                <label for="nome-prod">Nome:<input type="text" id="nome-prod" name="nome-prod"></label>
+                <label for="marca-prod">Marca:<input type="text" id="marca-prod" name="marca-prod"></label>
+            </div>
+            <div class="pausa"></div>
+            <div class="container-input">
+                 <label for="base-prod">Base:<select id="base-prod" name="base-prod">
+                            <option value="liquida">liquida</option>
+                            <option value="cremosa">cremosa</option>
+                            <option value="compacta">compacta</option>
+                            <option value="mousse">mousse</option>
+                            <option value="pó">pó</option>
+                        </select>
+                    </label>
+                    <label for="tipo-prod">Tipo:<select id="tipo-prod" name="tipo-prod">
+                            <option value="esmalte">esmalte</option>
+                            <option value="maquiagem">maquiagem</option>
+                            <option value="shampoo">shampoo</option>
+                            <option value="creme hidratante">creme hidratante</option>
+                            <option value="perfume">perfume</option>
+                            <option value="desodorante">desodorante</option>
+                            <option value="sabonete">sabonete</option>
+                            <option value="loção para barba">loção para barba</option>
+                            <option value="demaquilante">demaquilante</option>
+                        </select>
+                    </label>
+            </div>
+            <div class="pausa"></div>
+            <div class="container-input">
+                <label for="estado-prod" style="transform: translateX(3rem);">Estado:<select id="estado-prod" name="estado-prod">
+                    <option value="aberto">aberto</option>
+                    <option value="lacrado">lacrado</option>
+                </select>
+            </label>
+            <label for="validade-prod" style="transform: translateX(5rem);">Validade:<input type="date" id="validade-prod" name="validade-prod"></label>
+            <label for="quantidade-prod" style="transform: translateX(9rem);">quantidade:<input type="number" id="quantidade-prod" name="quantidade-prod" style="width: 20%;"></label>
+            </div>
+            <div class="pausa"></div>
+            <div class="container-input">
+                <input type="submit" id="alterar" value="Alterar">
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+    <footer>
+        <div class="container-footer">
+            <a>Todos os direitos reservados &copy; Can Say | 2024 - &infin;</a>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script src="script.js"></script>
+
+</body>
+</html>

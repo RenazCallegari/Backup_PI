@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+   
+    <div class="container-inicio">
+        <div class="container-simbolo">
+            <img src="simbolo.png" alt="" class="estetica-logo">
+            <h1 class="estetica-texto">ESTÉTICA</h1>
+        </div>
+
+        <div class="container-login-area">
+
+            <!-- DAR UM ECHO AQUI NA DIV DA CAIXA DE ERRO!! -->
+
+            <div class="container-login">   
+                <h2 class="login-text">Login</h2>
+                <form action="">
+                    <input type="text" name="usuario" id="usuario" placeholder="Usuário..." class="inputUser" required>
+                        <div class="box-user-ico">
+                            <i class='bx bx-user' id="user-icon"></i>
+                        </div>
+                    <label for="senha"> <i class='bx bx-show'id="MostrarSenha" onclick="MostrarSenha()"></i></label>
+                    <input type="password" name="senha" id="senha" placeholder="Senha..." required>
+                        <div class="box-lock-ico">
+                            <i class='bx bx-lock-alt'></i>
+                        </div>
+                    <div class="container-manter-logado">
+                        <input type="checkbox" name="ManterLogado" id="ManterLogado" style="width: 2rem; height: 1.5rem;">
+                        <label for="ManterLogado" class="manterLogadoLabel">Manter-se logado?</label>
+                    </div>
+                    <input type="submit" value="Entrar" id="logar">
+                </form>
+                <div class="div-line"></div>
+                <h4 class="prod-by">Uma produção Can Say</h4>
+
+            </div>
+        </div>
+    
+    </div>
+
+
+
+
+
+    
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>

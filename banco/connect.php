@@ -7,10 +7,10 @@ $host = "localhost";
 //Host ≠ LocalHost. Host e todo e qualquer dispositivo conectado a uma rede, um host nada mais e do que um provedor de servicos.
 //LocalHost e um conjunto de faixa de ip (127.0.0.0) cuja funcao e permitir que o computador possa conversar consigo mesmo, isso e disponibilizar servicos para si.
  
-$user = "id21965817_root";
+$user = "root";
 //Root vem de raiz, e o termo adotado pelas S.O linux para definir um administrador, neste contexto o user seria o usuario que tem acesso ao SGBD.
  
-$password = "@Senac2010";
+$password = "";
 //Uma senha vazia.
  
 $bd = "id21965817_db_estetcontrol";
@@ -95,40 +95,41 @@ function todosCursos($conn){
 function countUsos($tipo, $conn){
 
     if($tipo == "ASC"){
-        $sql = "SELECT * FROM estoque,produto ORDER BY 'usos' ASC LIMIT 1";
+        $sql = "SELECT * FROM estoque,produto WHERE usos > 0 ORDER BY usos ASC LIMIT 1";
         $resul = $conn->query($sql);
 
         $produtoUsado = array();
-        $countUsado = 0;
         if ($resul->num_rows > 0) {
             while ($row = $resul->fetch_assoc()) {
                 $produtoUsado[] = $row;
-                $countUsado = $countUsado + 1;
             }
             foreach ($produtoUsado as $produto){
                 $nomeProduto = $produto['nome_produto'];
+                $countUsado = $produto['usos'];
             }
+        } else {
+            $nomeProduto = "Nenhum produto foi usado ainda";
+            $countUsado = 0;
         }
     }
     if($tipo == "DESC"){
-        $sql = "SELECT * FROM estoque,produto ORDER BY 'usos' DESC LIMIT 1";
+        $sql = "SELECT * FROM estoque,produto WHERE usos > 0 ORDER BY usos DESC LIMIT 1";
         $resul = $conn->query($sql);
 
         $produtoUsado = array();
-        $countUsado = 0;
         if ($resul->num_rows > 0) {
             while ($row = $resul->fetch_assoc()) {
                 $produtoUsado[] = $row;
-                $countUsado = $countUsado + 1;
             }
             foreach ($produtoUsado as $produto){
                 $nomeProduto = $produto['nome_produto'];
+                $countUsado = $produto['usos'];
             }
+        } else {
+            $nomeProduto = "Nenhum produto foi usado ainda";
+            $countUsado = 0;
         }
     }
-    if($countUsado == 0){
-        $nomeProduto = "Nenhum produto foi usado ainda";
-        }
 
     return array($countUsado,$nomeProduto);
 }

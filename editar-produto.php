@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
         
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $idProduto = $_POST['id'];
+    $idProduto = isset($_POST["id"]) ? $_POST["id"] : "";
     $nomeProduto = isset($_POST["nome-prod"]) ? $_POST["nome-prod"] : "";
     $marcaProduto = isset($_POST["marca-prod"]) ? $_POST["marca-prod"] : "";
     $baseProduto = isset($_POST["base-prod"]) ? $_POST["base-prod"] : "";
@@ -55,20 +55,83 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $validadeProduto = isset($_POST["validade-prod"]) ? $_POST["validade-prod"] : "";
     $estadoProduto = isset($_POST["estado-prod"]) ? $_POST["estado-prod"] : "";
     $quantMin = isset($_POST["quantidade-prod-min"]) ? $_POST["quantidade-prod-min"] : "";
-    $quantAtu = isset($_POST["quantidade-prod-atu"]) ? $_POST["quantidade-prod-atu"] : "";
+    $quantAtu = isset($_POST["quantidade-prod"]) ? $_POST["quantidade-prod"] : "";
     $quantMax = isset($_POST["quantidade-prod-max"]) ? $_POST["quantidade-prod-max"] : "";
-        
-    $sql = "UPDATE produto SET nome_produto='$nomeProduto', marca='$marcaProduto', base='$baseProduto', tipo='$tipoProduto' WHERE id_produto=$idProduto";
-    $resul = $conn->query($sql);
-            
-    $sql = "UPDATE estoque SET quant_min='$quantMin', quant_atual='$quantAtu', quant_ideal ='$quantMax' WHERE id_produto_fk=$idProduto";
-    $resul = $conn->query($sql);
 
-    $sql = "UPDATE validade SET validade='$validadeProduto', estado='$estadoProduto' WHERE id_produto_fk=$idProduto";
+    $sql = "SELECT * FROM produto, estoque WHERE id_produto = $idProduto AND id_produto_fk = $idProduto";
     $resul = $conn->query($sql);
+    $produtoModifica = array();
+    if ($resul->num_rows >0) {
+        while ($row = $resul->fetch_assoc()) {
+            $produtoModifica[] = $row;
+        }
+        foreach ($produtoModifica as $produto){
+            $nomeMudar = $produto['nome_produto'];
+            $marcaMudar = $produto['marca'];
+            $baseMudar = $produto['base'];
+            $tipoMudar = $produto['tipo'];
+            $quantMinMudar = $produto['quant_min'];
+            $quantAtuMudar = $produto['quant_atual'];
+            $quantMaxMudar = $produto['quant_ideal'];
+        }
+    }
 
-    if($estadoProduto == "vazio"){
-        $sql = $sql = "SELECT estado FROM validade WHERE id_produto_fk=$idProduto AND estado='Vazio'";
+    if ($nomeProduto != "" AND $nomeProduto !=$produto["nome_produto"] AND $idProduto != ""){
+    $sql = "UPDATE produto SET nome_produto='$nomeProduto' WHERE id_produto=$idProduto";
+    $resul = $conn->query($sql);
+    }
+    
+    if ($marcaProduto != "" AND $marcaProduto !=$produto["marca"] AND $idProduto != ""){
+        $sql = "UPDATE produto SET marca='$marcaProduto' WHERE id_produto=$idProduto";
+        $resul = $conn->query($sql);
+    }
+
+    if ($baseProduto != "" AND $baseProduto !=$produto["base"] AND $idProduto != ""){
+        $sql = "UPDATE produto SET base='$baseProduto' WHERE id_produto=$idProduto";
+        $resul = $conn->query($sql);
+    }
+
+    if ($tipoProduto != "" AND $tipoProduto !=$produto["tipo"] AND $idProduto != ""){
+        $sql = "UPDATE produto SET tipo='$tipoProduto' WHERE id_produto=$idProduto";
+        $resul = $conn->query($sql);
+    }
+    if($quantAtu != "" AND $quantAtu+$produto['quant_atual'] > $produto['quant_atual'] AND $validadeProduto != "" AND $idProduto != ""){
+        $sql = "UPDATE estoque SET quant_atual='$quantAtu' WHERE id_produto_fk=$idProduto";
+        $resul = $conn->query($sql);
+        for($i = 1; $i < $quantAtu - $produto['quant_atual']; $i++){
+            $sql = "INSERT INTO validade (id_produto_fk, validade, estado) VALUES ('$idProduto','$validadeProduto','$estadoProduto')";
+            $resul = $conn->query($sql);
+        }
+    } elseif($quantAtu != "" AND $quantAtu+$produto['quant_atual'] <= $produto['quant_atual'] AND $idProduto != "") {
+        $quantAtu = $quantAtu + $produto['quant_atual'];
+        $sql = "UPDATE estoque SET quant_atual='$quantAtu' WHERE id_produto_fk=$idProduto";
+        $resul = $conn->query($sql);
+        $sql = "SELECT * FROM validade WHERE id_produto_fk = '$idProduto' ORDER BY validade ASC LIMIT $quantAtu";
+        $resul = $conn->query($sql);
+        $produtosDB = array();
+        if ($resul->num_rows > 0) {
+            while ($row = $resul->fetch_assoc()) {
+                $produtosDB[] = $row;
+            }
+            foreach($produtosDB as $produto){
+                $sql = "UPDATE validade SET validade='$validadeProduto', estado='$estadoProduto' WHERE id_produto_fk=$idProduto";
+                $resul = $conn->query($sql);
+                
+            }
+        }
+    }
+    if($quantMin != "" AND $quantMin != $produto['quant_min'] AND $idProduto != ""){
+        $sql = "UPDATE estoque SET quant_min='$quantMin' WHERE id_produto_fk=$idProduto";
+        $resul = $conn->query($sql);
+    }
+
+    if($quantMax != "" AND $quantMax != $produto['quant_ideal'] AND $idProduto != ""){
+        $sql = "UPDATE estoque SET quant_ideal='$quantMax' WHERE id_produto_fk=$idProduto";
+        $resul = $conn->query($sql);
+    }
+
+    if($estadoProduto != "")
+        $sql = "SELECT estado FROM validade WHERE id_produto_fk=$idProduto AND estado='Vazio'";
         $resul = $conn->query($sql);
         $produtoModifica = array();
         $cont = 0;
@@ -82,8 +145,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $resul = $conn->query($sql);
             }
     }
-    }
-
     if($resul){
         $msg = "Alteração realizada com sucesso!";
         $_SESSION["texto_sucesso"] = $msg;
@@ -190,7 +251,7 @@ $tipo = procuraProduto('tipo',$conn);
     <div class="container-form-cadastro">
         
         <div class="label-cadastro">
-            <p>Cadastro:</p>
+            <p>Editar Produto:</p>
         </div>
 
         <form action="editar-produto.php" method="post">
@@ -208,7 +269,7 @@ $tipo = procuraProduto('tipo',$conn);
                     <datalist id="marcas">
                             <?php
                             foreach ($marca as $m){
-                                echo "<option value='".$m['marca']."'></option>";
+                                echo "<option value='".$m['marca']."'>".$m['marca']."</option>";
                             }
                             ?>
                     </datalist>    
@@ -220,7 +281,7 @@ $tipo = procuraProduto('tipo',$conn);
                      <datalist id="bases">
                             <?php
                             foreach ($base as $b){
-                                echo "<option value='".$b['base']."'></option>";
+                                echo "<option value='".$b['base']."'>".$b['base']."</option>";
                             }
                             ?>
                         </datalist>    
@@ -243,14 +304,14 @@ $tipo = procuraProduto('tipo',$conn);
             </div>
             <div class="pausa"></div>
             <div class="" id="container-input">
-                <label for="quantidade-prod">quantidade mínima:<input type="number" id="quantidade-prod" name="quantidade-prod-min" style="width: 23%;" min="0" value="<?php echo $quantMinMudar?>"></label>
-                <label for="quantidade-prod">quantidade atual:<input type="number" id="quantidade-prod" name="quantidade-prod-atu" style="width: 23%;" min="0" value="<?php echo $quantAtuMudar?>"></label>
-                <label for="quantidade-prod">quantidade ideal:<input type="number" id="quantidade-prod" name="quantidade-prod-max" style="width: 23%;" min="0" value="<?php echo $quantMaxMudar?>"></label>
+                <label for="quantidade-prod">Quantidade mínima:<input type="number" id="quantidade-prod-min" name="quantidade-prod-min" style="width: 23%;" min="0" value="<?php echo $quantMinMudar?>"></label>
+                <label for="quantidade-prod">Quantidade atual:<input type="number" id="quantidade-prod-atu" name="quantidade-prod-atu" style="width: 23%;" min="0" value="<?php echo $quantAtuMudar?>"></label>
+                <label for="quantidade-prod">Quantidade ideal:<input type="number" id="quantidade-prod-max" name="quantidade-prod-max" style="width: 23%;" min="0" value="<?php echo $quantMaxMudar?>"></label>
                 <input type="hidden" name="id" value="<?php echo $idProduto ?>">
             </div>
             <div class="pausa"></div>
             <div class="container-input">
-                <input type="submit" id="cadastro-enviar">
+                <input type="submit" id="alterar" value="alterar">
             </div>
         </form>
     </div>
